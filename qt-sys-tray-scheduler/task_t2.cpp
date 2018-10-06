@@ -21,7 +21,7 @@ bool Task_T2::fileExists(QString path) {
 void Task_T2::execute()
 {
     // Check existence of file "C:/ESEMPIO.txt" and if found print a message
-    if(!fileExists("/home/ESEMPIO.txt"))
+    if(!fileExists("C:/ESEMPIO.txt"))
     {
         task_print("File '/home/ESEMPIO.txt' not found");
     }
