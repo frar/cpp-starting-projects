@@ -121,22 +121,37 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private slots:
+
+    /**
+     * \brief Function (SLOT) to set message of thread of t1 called at button click
+    */
     void setMessage();
+
+    /**
+     * \brief Slot called when message is clicked
+    */
     void messageClicked();
 
 private:
+
+    // Functions to create GUI main widgets
     void createMessageGroupBox();
     void createActions();
     void createTrayIcon();
 
+    // Widgets and buttons for main window
     QGroupBox *t1GroupBox;
     QLabel *bodyLabel;
     QTextEdit *bodyEdit;
     QPushButton *setMessageButton;
+
+    // Actions to handle window resizing
     QAction *minimizeAction;
     QAction *maximizeAction;
     QAction *restoreAction;
     QAction *quitAction;
+
+    // Widgets for trayIcon and trayIcon menu
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
 

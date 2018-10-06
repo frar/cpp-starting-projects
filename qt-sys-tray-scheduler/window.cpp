@@ -98,18 +98,26 @@ Window::Window()
     setWindowTitle(tr("Generic Task Scheduler"));
     resize(400, 300);
 
-    // Define tasks T1 and T2
+    // Define task T1
     t1 = new Task_T1("Default message.");
     FixedIntervalPeriodicity periodicity_t1 = {0, 0, 0, 0, 0, 10};
     t1->setFixedIntervalPeriodicity(periodicity_t1);
+
+    // Define task T2
     Task_T2 *t2 = new Task_T2();
     FixedIntervalPeriodicity periodicity_t2 = {0, 0, 0, 0, 0, 30};
     t2->setFixedIntervalPeriodicity(periodicity_t2);
+
+    // Define task T1 with dayname periodicity (not required by base requirements, so commented out)
+    /*Task_T1 *t1_dayname = new Task_T1("t1 dayname periodicity");
+    DayNamePeriodicity periodicity_t3 = {6, QTime(13, 00, 0)};
+    t1_dayname->setDayNamePeriodicity(periodicity_t3);*/
 
     // Run Scheduler Timer
     mSchedulerTimer = new SchedulerTimer;
     mSchedulerTimer->addTask(t1);
     mSchedulerTimer->addTask(t2);
+    // mSchedulerTimer->addTask((t1_dayname));
 
     // Set timeout to call scheduler periodically
     connect(mSchedulerTimer, SIGNAL(timeout()), mSchedulerTimer, SLOT(executeNextTask()));

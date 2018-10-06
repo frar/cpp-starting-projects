@@ -28,10 +28,8 @@ struct FixedIntervalPeriodicity
  */
 struct DayNamePeriodicity
 {
-    std::string shortDayName;
-    int hour;
-    int minutes;
-    int secs;
+    int dayOfWeek;
+    QTime time;
 };
 
 /**
@@ -56,6 +54,12 @@ public:
      */
     virtual ~TaskStrategy(){}
 
+    typedef enum
+    {
+        FIXED,
+        DAYTIME,
+    } PeriodicityType;
+
     /**
      * \brief Function to update execution time using fixed interval periodicity
      */
@@ -69,7 +73,35 @@ public:
     }
 
     /**
-     * brief Funciton to add periodicity of the task based on fixed intervals of time
+     * \brief Function to update execution time using daytime periodicity
+     */
+    void updateExecutionTimeThroughDayTimeIntervalPeriodicity(){
+        // Look for the next dayname
+        QDateTime todayDateTime =QDateTime::currentDateTime();
+        QDateTime startingDateTime =todayDateTime;
+
+        // Time must be the same in mDayNamePeriodicity while data must be found
+        mNextExecutionTime.setTime(mDayNamePeriodicity.time);
+
+
+        // Find next date with same day of week
+        while(startingDateTime.date().dayOfWeek() != mDayNamePeriodicity.dayOfWeek)
+            startingDateTime.addDays(1);
+
+        // if today is the found date a check on the time is required
+        if(todayDateTime.date() == startingDateTime.date())
+        {
+            if(startingDateTime.time() > mDayNamePeriodicity.time) // if time has already passed, the next day will be
+                startingDateTime.setDate(startingDateTime.date().addDays(7));
+        }
+
+        // Set found date
+        mNextExecutionTime.setDate(startingDateTime.date());
+        // std::cout << "Next scheduled time" << mNextExecutionTime.toString().toStdString() << std::endl;
+    }
+
+    /**
+     * brief Function to add periodicity of the task based on fixed intervals of time
      * \param year year periodicity
      * \param month month periodicity
      * \param day day periodicity
@@ -82,6 +114,7 @@ public:
         mFixedIntervalPeriodicity = periodicity;
         mNextExecutionTime = QDateTime::currentDateTime();
         updateExecutionTimeThroughFixedIntervalPeriodicity();
+        mType = FIXED;
      }
 
     /**
@@ -94,6 +127,8 @@ public:
     void setDayNamePeriodicity(const DayNamePeriodicity &dayNamePeriodicity)
     {
         mDayNamePeriodicity = dayNamePeriodicity;
+        updateExecutionTimeThroughDayTimeIntervalPeriodicity();
+        mType = DAYTIME;
     }
 
     /**
@@ -103,7 +138,10 @@ public:
     bool timerHasExpired(){
         QDateTime currentDateTime = QDateTime::currentDateTime();
         if(currentDateTime > mNextExecutionTime){
-            updateExecutionTimeThroughFixedIntervalPeriodicity();
+            if(mType == FIXED)
+                updateExecutionTimeThroughFixedIntervalPeriodicity();
+            else
+                updateExecutionTimeThroughDayTimeIntervalPeriodicity();
             return true;
         }
 
@@ -117,8 +155,6 @@ public:
     void task_print(const std::string &message)
     {
         QDateTime currentDateTime = QDateTime::currentDateTime();
-        /*std::string stringToBePrinted = std::string("Task ") + mTaskName + ": " + "\n\t" + currentDateTime.toString().toStdString() + std::string(" - ") + message.c_str() + "\n\n";
-        qDebug(stringToBePrinted.c_str());*/
         qDebug("Task %s: \n\t%s - %s\n\n", mTaskName.c_str(), currentDateTime.toString().toStdString().c_str(), message.c_str());
     }
 
@@ -148,6 +184,11 @@ protected:
      * \brief Variable to distinguish type of task
     */
     std::string mTaskName = "0";
+
+    /**
+     * \brief Variable that stores periodicity type (FIXED or DAYTIME)
+    */
+    PeriodicityType mType;
 };
 
 #endif // ITASK_H
