@@ -1,3 +1,10 @@
+/***************************************|
+**                                      |
+** Copyright (C) 2018 Francesco Argese  |
+** License: BSD                         |
+**                                      |
+****************************************/
+
 #include "task_t1.h"
 
 // Qt headers

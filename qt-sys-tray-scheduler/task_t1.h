@@ -1,3 +1,10 @@
+/***************************************|
+**                                      |
+** Copyright (C) 2018 Francesco Argese  |
+** License: BSD                         |
+**                                      |
+****************************************/
+
 #ifndef TASK_T1_H
 #define TASK_T1_H
 

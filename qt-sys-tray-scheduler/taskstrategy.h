@@ -1,3 +1,10 @@
+/***************************************|
+**                                      |
+** Copyright (C) 2018 Francesco Argese  |
+** License: BSD                         |
+**                                      |
+****************************************/
+
 #ifndef ITASK_H
 #define ITASK_H
 

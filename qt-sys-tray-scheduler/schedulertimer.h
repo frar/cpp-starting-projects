@@ -1,3 +1,10 @@
+/***************************************|
+**                                      |
+** Copyright (C) 2018 Francesco Argese  |
+** License: BSD                         |
+**                                      |
+****************************************/
+
 #ifndef SCHEDULERTIMER_H
 #define SCHEDULERTIMER_H
 
