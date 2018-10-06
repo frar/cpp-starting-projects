@@ -1,4 +1,4 @@
-# csp
+# cpp-starting-projects
 C++ starting projects
 
 This repository is a container of simple C++ projects. 
