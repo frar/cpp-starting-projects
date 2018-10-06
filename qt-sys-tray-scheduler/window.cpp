@@ -101,10 +101,10 @@ Window::Window()
     // Define tasks T1 and T2
     t1 = new Task_T1("Default message.");
     FixedIntervalPeriodicity periodicity_t1 = {0, 0, 0, 0, 0, 10};
-    t1->addFixedIntervalPeriodicity(periodicity_t1);
+    t1->setFixedIntervalPeriodicity(periodicity_t1);
     Task_T2 *t2 = new Task_T2();
     FixedIntervalPeriodicity periodicity_t2 = {0, 0, 0, 0, 0, 30};
-    t2->addFixedIntervalPeriodicity(periodicity_t2);
+    t2->setFixedIntervalPeriodicity(periodicity_t2);
 
     // Run Scheduler Timer
     mSchedulerTimer = new SchedulerTimer;

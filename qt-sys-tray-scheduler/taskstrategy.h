@@ -60,12 +60,12 @@ public:
      * \brief Function to update execution time using fixed interval periodicity
      */
     void updateExecutionTimeThroughFixedIntervalPeriodicity(){
-        mNextExecutionTime = mNextExecutionTime.addYears(mFixedIntervalPeriodicity.at(0).year);
-        mNextExecutionTime = mNextExecutionTime.addMonths(mFixedIntervalPeriodicity.at(0).month);
-        mNextExecutionTime = mNextExecutionTime.addDays(mFixedIntervalPeriodicity.at(0).day);
-        mNextExecutionTime = mNextExecutionTime.addSecs(mFixedIntervalPeriodicity.at(0).hour*60*60);
-        mNextExecutionTime = mNextExecutionTime.addSecs(mFixedIntervalPeriodicity.at(0).minutes*60);
-        mNextExecutionTime = mNextExecutionTime.addSecs(mFixedIntervalPeriodicity.at(0).secs);
+        mNextExecutionTime = mNextExecutionTime.addYears(mFixedIntervalPeriodicity.year);
+        mNextExecutionTime = mNextExecutionTime.addMonths(mFixedIntervalPeriodicity.month);
+        mNextExecutionTime = mNextExecutionTime.addDays(mFixedIntervalPeriodicity.day);
+        mNextExecutionTime = mNextExecutionTime.addSecs(mFixedIntervalPeriodicity.hour*60*60);
+        mNextExecutionTime = mNextExecutionTime.addSecs(mFixedIntervalPeriodicity.minutes*60);
+        mNextExecutionTime = mNextExecutionTime.addSecs(mFixedIntervalPeriodicity.secs);
     }
 
     /**
@@ -77,9 +77,9 @@ public:
      * \param minute minute periodicity
      * \param sec sec periodicity
      */
-    void addFixedIntervalPeriodicity(const FixedIntervalPeriodicity &periodicity)
+    void setFixedIntervalPeriodicity(const FixedIntervalPeriodicity &periodicity)
     {
-        mFixedIntervalPeriodicity.push_back(periodicity);
+        mFixedIntervalPeriodicity = periodicity;
         mNextExecutionTime = QDateTime::currentDateTime();
         updateExecutionTimeThroughFixedIntervalPeriodicity();
      }
@@ -91,9 +91,9 @@ public:
      * \param minute minute of execution
      * \param sec sec of execution
      */
-    void addDayNamePeriodicity(const DayNamePeriodicity &dayNamePeriodicity)
+    void setDayNamePeriodicity(const DayNamePeriodicity &dayNamePeriodicity)
     {
-        mDayNamePeriodicity.push_back(dayNamePeriodicity);
+        mDayNamePeriodicity = dayNamePeriodicity;
     }
 
     /**
@@ -132,12 +132,12 @@ protected:
     /**
      * \brief Vector to store periodicity of type fixed interval
      */
-    std::vector<FixedIntervalPeriodicity> mFixedIntervalPeriodicity;
+    FixedIntervalPeriodicity mFixedIntervalPeriodicity;
 
     /**
      * \brief Vector to store periodicity of type DayName
      */
-    std::vector<DayNamePeriodicity> mDayNamePeriodicity;
+    DayNamePeriodicity mDayNamePeriodicity;
 
     /**
      * \brief Next execution time
